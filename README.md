@@ -35,8 +35,11 @@ docker-compose up --build
   'scripts': 'simulaciones de scanners (semgrep, trivy, zap)',
 }
 
+## Visión y arquitectura
+Para una descripción detallada del MVP, sus capacidades planificadas y la arquitectura propuesta, consulta [docs/mvp-architecture.md](docs/mvp-architecture.md).
+
 ## Próximos pasos
-- Reemplazar scripts simulados por llamadas reales a semgrep/trivy/zap dentro de contenedores
-- Añadir autenticación y roles
-- Integrar MinIO para almacenamiento real de reportes
-- Añadir k3d para despliegues Kubernetes y OPA
+- Reemplazar scripts simulados por llamadas reales a semgrep/trivy/zap dentro de contenedores.
+- Añadir autenticación y roles.
+- Integrar MinIO para almacenamiento real de reportes.
+- Añadir k3d para despliegues Kubernetes y OPA.
