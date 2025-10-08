@@ -1,0 +1,61 @@
+
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: devsec
+      POSTGRES_PASSWORD: devsec
+      POSTGRES_DB: devsec_lab
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  minio:
+    image: minio/minio:RELEASE.2025-01-01T00-00-00Z
+    command: server /data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  backend:
+    build: ./backend
+    depends_on:
+      - postgres
+      - minio
+    environment:
+      DATABASE_URL: postgres://devsec:devsec@postgres:5432/devsec_lab
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/usr/src/app
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:5173"
+    volumes:
+      - ./frontend:/usr/src/app
+    depends_on:
+      - backend
+
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  minio_data:

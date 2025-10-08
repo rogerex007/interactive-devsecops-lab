@@ -1,0 +1,19 @@
+{
+  "name": "devsec-lab-backend",
+  "version": "0.1.0",
+  "description": "Backend API for DevSecOps Lab MVP",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "minio": "^7.0.18",
+    "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
