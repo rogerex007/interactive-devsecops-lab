@@ -1,4 +1,29 @@
+# Dependencies
 **/node_modules/
+**/package-lock.json
+
+# Build outputs
 frontend/dist/
-backend/results/*.json
-backend/results/*.log
+
+# Results and logs (generated files)
+backend/results/
+*.log
+*.json
+
+# Temporary files
+backend/package-test.json
+backend/run-security-tools.sh
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker volumes
+postgres_data/
+minio_data/
