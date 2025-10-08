@@ -22,8 +22,9 @@ app.get('/labs', (req, res) => {
 app.post('/labs/:id/run', (req, res) => {
   const labId = req.params.id;
   const job = req.body.job; // e.g., "semgrep", "trivy", "zap"
-  const outFile = path.join(RESULTS_DIR, `${labId}_${job}.json`);
-  const logsFile = path.join(RESULTS_DIR, `${labId}_${job}.log`);
+  const baseName = `${labId}_${job}`;
+  const outFile = path.join(RESULTS_DIR, `${baseName}.json`);
+  const logsFile = path.join(RESULTS_DIR, `${baseName}.log`);
   let cmd = '';
 
   if (job === 'semgrep') {
@@ -40,7 +41,14 @@ app.post('/labs/:id/run', (req, res) => {
     // background exec
   });
 
-  return res.json({ status: 'started', job, out: outFile, logs: logsFile });
+  return res.json({
+    status: 'started',
+    job,
+    resultFile: `${baseName}.json`,
+    logFile: `${baseName}.log`,
+    resultUrl: `/api/results/${baseName}.json`,
+    logUrl: `/api/results/${baseName}.log`
+  });
 });
 
 app.get('/results/:file', (req, res) => {
@@ -48,6 +56,28 @@ app.get('/results/:file', (req, res) => {
   const p = path.join(RESULTS_DIR, file);
   if (!fs.existsSync(p)) return res.status(404).json({ error: 'file not found' });
   res.sendFile(p);
+});
+
+app.get('/results', (req, res) => {
+  const files = fs.readdirSync(RESULTS_DIR)
+    .filter(name => name.endsWith('.json'))
+    .map(name => {
+      const [labId, job] = name.replace('.json', '').split('_');
+      const stats = fs.statSync(path.join(RESULTS_DIR, name));
+      const logFile = `${labId}_${job}.log`;
+      const logPath = path.join(RESULTS_DIR, logFile);
+      const hasLog = fs.existsSync(logPath);
+      return {
+        file: name,
+        labId,
+        job,
+        updatedAt: stats.mtime,
+        url: `/api/results/${name}`,
+        logFile: hasLog ? logFile : null,
+        logUrl: hasLog ? `/api/results/${logFile}` : null
+      };
+    });
+  res.json(files);
 });
 
 const port = process.env.PORT || 4000;
