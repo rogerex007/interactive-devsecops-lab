@@ -1,6 +1,6 @@
 # 🛡️ DevSecOps Lab - Interactive Security Dashboard
 
-Un laboratorio interactivo de DevSecOps con dashboard profesional, herramientas de seguridad reales y generación automática de workflows de CI/CD.
+Un laboratorio interactivo de DevSecOps con dashboard profesional, herramientas de seguridad y generación automática de workflows de CI/CD.
 
 ## 🚀 Características Principales
 
@@ -49,7 +49,7 @@ Un laboratorio interactivo de DevSecOps con dashboard profesional, herramientas 
 
 1. **Clonar el repositorio:**
 ```bash
-git clone <repository-url>
+git clone git@github.com:rogerex007/interactive-devsecops-lab.git
 cd interactive-devsecops-lab
 ```
 
@@ -211,16 +211,3 @@ El proyecto incluye `backend/test-app.js` con vulnerabilidades intencionales:
 ## 📝 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 🙏 Agradecimientos
-
-- [Semgrep](https://semgrep.dev/) - Static analysis engine
-- [Trivy](https://trivy.dev/) - Vulnerability scanner
-- [OWASP ZAP](https://www.zaproxy.org/) - Web application security scanner
-- [Chart.js](https://www.chartjs.org/) - JavaScript charting library
-- [React](https://reactjs.org/) - UI library
-- [Docker](https://www.docker.com/) - Containerization platform
-
----
-
-**¿Necesitas ayuda?** Abre un issue en el repositorio o contacta al equipo de desarrollo.
